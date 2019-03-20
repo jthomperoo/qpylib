@@ -4,6 +4,8 @@ env:
   global:
     - BUILD_IMAGE="qpylib"
     - BUILD_TAG="build"
+    - BUILD_GIT_NAME="IBM"
+    - BUILD_GIT_EMAIL="<>" # Intentionally empty
 
 services:
   - docker
@@ -15,9 +17,9 @@ stages:
   - lint
   - test
   - name: build-development
-    if: tag IS blank
+    if: env(QPYLIB_TAG) IS blank
   - name: build-release
-    if: tag IS present
+    if: env(QPYLIB_TAG) IS present
 
 jobs:
   include:
@@ -33,6 +35,12 @@ jobs:
     - stage: build-release
       script:
         - ./build.sh "${TRAVIS_TAG}" "${BUILD_IMAGE}:${BUILD_TAG}"
+      before_deploy:
+        # Set up git user name and tag this commit
+        - git config --local user.name "${BUILD_GIT_NAME}"
+        - git config --local user.email "${BUILD_GIT_EMAIL}"
+        - export TRAVIS_TAG="${QPYLIB_TAG}"
+        - git tag "${TRAVIS_TAG}"
       deploy:
         provider: releases
         api_key: "${GITHUB_OAUTH_TOKEN}"
