@@ -1,10 +1,11 @@
 language: python
 
 env:
-  - BUILD_IMAGE="qpylib"
-  - BUILD_TAG="build"
-  - BUILD_GIT_NAME="IBM"
-  - BUILD_GIT_EMAIL="<>" # Intentionally empty
+  global:
+    - BUILD_IMAGE="qpylib"
+    - BUILD_TAG="build"
+    - BUILD_GIT_NAME="IBM"
+    - BUILD_GIT_EMAIL="<>" # Intentionally empty
 
 services:
   - docker
