@@ -11,9 +11,17 @@ script: ./lint.sh && ./test.sh
 after_success:
   - if [[ $TRAVIS_TAG ]]; then
       ./build.sh ${TRAVIS_TAG};
+      sonar-scanner;
     else
       ./build.sh "0.0.dev${TRAVIS_BUILD_NUMBER}";
+      sonar-scanner;
     fi
+
+addons:
+  sonarcloud:
+    organization: "${SONAR_CLOUD_ORG}"
+    token:
+      secure: "${SONAR_CLOUD_TOKEN}"
 
 deploy:
   provider: releases
