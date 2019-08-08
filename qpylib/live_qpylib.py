@@ -12,7 +12,7 @@ from socket import gethostbyname, gethostname
 class LiveQpylib(AbstractQpylib):
     LOGFILE_LOCATION = '/store/log/app.log'
     APP_CERT_LOCATION = '/etc/pki/tls/certs/ca-bundle.crt'
-    APP_MANIFEST_LOCATION = 'app/manifest.json'
+    APP_MANIFEST_LOCATION = '/opt/app-root/src/app/manifest.json'
 
     QRADAR_CONSOLE_FQDN = 'QRADAR_CONSOLE_FQDN'
     QRADAR_CSRF = 'QRadarCSRF'
