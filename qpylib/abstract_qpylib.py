@@ -18,7 +18,7 @@ cached_manifest = None
 
 class AbstractQpylib(object, metaclass=ABCMeta):
     LOGGER_NAME = 'com.ibm.applicationLogger'
-    LOGFILE_LOCATION = '/store/log/app.log'
+    LOGFILE_LOCATION = '/opt/app-root/src/store/log/app.log'
     APP_FILE_LOG_FORMAT = '%(asctime)s [%(module)s.%(funcName)s] [%(threadName)s] [%(levelname)s] - %(message)s'
     APP_CONSOLE_LOG_FORMAT = '%(asctime)s %(module)s.%(funcName)s: %(message)s'
 
@@ -122,7 +122,7 @@ class AbstractQpylib(object, metaclass=ABCMeta):
         return os.path.join(self._root_path(), relative_path)
 
     def _root_path(self):
-        return '/'
+        return '/opt/app-root/src/'
 
     @abstractmethod
     def get_app_base_url(self):
