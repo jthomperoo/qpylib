@@ -8,7 +8,7 @@ import os
 from socket import gethostbyname, gethostname
 
 class LiveQpylib(AbstractQpylib):
-    APP_CERT_LOCATION = '/etc/pki/tls/certs/ca-bundle.crt'
+    APP_CERT_LOCATION = '/opt/app-root/etc/pki/tls/certs/ca-bundle.crt'
     QRADAR_CONSOLE_FQDN = 'QRADAR_CONSOLE_FQDN'
     QRADAR_CSRF = 'QRadarCSRF'
     SEC_HEADER = 'SEC'
