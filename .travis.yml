@@ -10,13 +10,17 @@ addons:
   sonarcloud:
       organisation: "qradar-app-framework"
 
-script: 
+before_script:
+  - pip install -r requirements.txt
+
+script:
   - ./lint.sh && ./test.sh
     # sonar scan skipped if build was triggered by create pull request or create tag or fork build.
     # this will only run once merged into the qpylib repository - not on forks/pull requests
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -z "$TRAVIS_TAG" ] && [ "$TRAVIS_REPO_SLUG" == "IBM/qpylib" ]; then
       sonar-scanner;
     fi
+  - pdoc -o docs/reference qpylib && mkdocs build -d site
 
 after_success:
   - if [[ $TRAVIS_TAG ]]; then
@@ -26,9 +30,17 @@ after_success:
     fi
 
 deploy:
-  provider: releases
-  api_key: ${GITHUB_OAUTH_TOKEN}
-  file: dist/qpylib-${TRAVIS_TAG}.tar.gz
-  skip_cleanup: true
-  on:
-    tags: true
+  - provider: releases
+    api_key: ${GITHUB_OAUTH_TOKEN}
+    file: dist/qpylib-${TRAVIS_TAG}.tar.gz
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    target_branch: documentation
+    local_dir: site/
+    on:
+      branch: docs_prototype
