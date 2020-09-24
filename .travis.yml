@@ -14,7 +14,7 @@ script:
   - ./lint.sh && ./test.sh
     # sonar scan skipped if build was triggered by create pull request or create tag or fork build.
     # this will only run once merged into the qpylib repository - not on forks/pull requests
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -z "$TRAVIS_TAG" ] && [ "$TRAVIS_REPO_SLUG" == "IBM/qpylib" ]; then
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -z "$TRAVIS_TAG" ]; then
       sonar-scanner;
     fi
 
